@@ -1,11 +1,17 @@
-#define ENA 5
-#define ENB 6
-#define IN1 7
-#define IN2 8
-#define IN3 9
-#define IN4 11
-
-#include <Servo.h>
+// Speed control pins
+// ENA is for the left side
+// ENB is for the right side
+const int ENA = 5;
+const int ENB = 6;
+// Direction control pins
+// IN1 is the back right motor
+// IN2 is the front right motor
+// IN3 is the front left motor
+// IN4 is the back left motor
+const int IN1 = 7;
+const int IN2 = 8;
+const int IN3 = 9;
+const int IN4 = 11;
 
 //     Left motor truth table
 // Here are some handy tables to show the various modes of operation.
@@ -93,21 +99,6 @@ void turnRight(int carSpeed) {
 }
 
 /**
- * @brief Moves the robot in a swing turn to the right. A swing turn is when only one side of the robot's drivebase is powered.
- *
- * @param carSpeed an integer representing the car's speed.
- * This value is capped at 255 and passing in a higher value will
- * cap at 255
- */
-void swingTurnRight(int carSpeed) {
-    digitalWrite(IN1, HIGH);
-    digitalWrite(IN2, LOW);
-    digitalWrite(IN3, LOW);
-    digitalWrite(IN4, HIGH);
-    analogWrite(ENA, carSpeed);
-    analogWrite(ENB, 0.25 * carSpeed);
-}
-/**
  * @brief Moves the robot in a swing turn to the left. A swing turn is when only one side of the robot's drivebase is powered.
  *
  * @param carSpeed an integer representing the car's speed.
@@ -124,6 +115,22 @@ void swingTurnLeft(int carSpeed) {
 }
 
 /**
+ * @brief Moves the robot in a swing turn to the right. A swing turn is when only one side of the robot's drivebase is powered.
+ *
+ * @param carSpeed an integer representing the car's speed.
+ * This value is capped at 255 and passing in a higher value will
+ * cap at 255
+ */
+void swingTurnRight(int carSpeed) {
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+    digitalWrite(IN3, LOW);
+    digitalWrite(IN4, HIGH);
+    analogWrite(ENA, carSpeed);
+    analogWrite(ENB, 0.25 * carSpeed);
+}
+
+/**
  * @brief Stops the robot's drive motors.
  *
  */
@@ -133,6 +140,7 @@ void stop() {
 }
 
 void setup() {
+    // Configure all of these pins as outputs
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);
     pinMode(IN3, OUTPUT);
